@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>صفحة الألعاب</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    * {
+        background-color: #fff;
+        color:#001e4d;
+        text-align: center;
+    }
+    h1 {
+        font-size: 80px;
+        color: red;
+    }
+    .blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+      }
+      @keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+      @-webkit-keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+      #btn1, #btn2 {
+            color: #001e4d;
+            font-weight: bolder;
+            font-size: 25px;
+            width: auto;
+            border: solid 3px black;
+            padding: 20px;
+            margin: 20px auto 0;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            /*display: none;/*the button will be hidden as long as the question is not answered*/
+            display: block;
+      }
+      #btn1 {
+        background-color: chartreuse;
+        left: 230px;
+      }
+      #btn2{
+        background-color: cornflowerblue;
+        left: 530px;
+      }
+      #next-btn {
+            background: orchid;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            font-size: 20px;
+            padding: 10px;
+            margin: 20px auto 0;
+            border-radius: 10px;
+            cursor: pointer;
+            /*display: none;/*the button will be hidden as long as the question is not answered*/
+            display: block;
+            position: relative;
+            top: 150px;
+            left: 20px;
+            transition: transform 0.5s ease-in-out;
+        }
+    #btn1:hover, #btn2:hover {
+        background-color: gray;
+        transform: scale(1.3);/*zoom effect on hover (3* the original size)*/
+      }
+    #next-btn:hover {
+            color: green;
+            transform: scale(1.2);
+        }
+    </style>
+    </head>
+<body>
+    <h1 class="blink"> صـفــحـــة الألــــعـــاب</h1>
+    <br>
+    <br>
+    <br>
+    <div>
+        <table>
+            <td>
+                <button id="btn1" onclick="window.location.href='Matching_game.html'">لــعــبــة الــمــطــابــقــة</button>
+            </td>
+            <td>
+                <button id="btn2" onclick="window.location.href='MCQuiz.html'">اخــتــبــر مــعــلــومــاتــك</button>
+            </td>
+        </table>
+    </div>
+    <button id="next-btn" onclick="window.location.href='MainPage.html'">الصفحة الرئيسية</button>
+    
+<script language="JavaScript">
+
+      const nextButton = document.getElementById("next-btn");
+
+      let animationIndex = 0;
+      const animationInterval = setInterval(() => {
+        if (animationIndex === 0) {
+          nextButton.style.transform = `rotate(${animationIndex * 360}deg)`;
+          animationIndex++;
+        } else {
+          clearInterval(animationInterval);
+        }
+      }, 2000);
+</script>
+</body>
+</html>

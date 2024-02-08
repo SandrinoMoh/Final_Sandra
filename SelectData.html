@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html language= "ar">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>اختيار البيانات</title>
+    <style>
+html {
+  margin: 0;
+  padding: 0;
+  background-position: 100%;
+  direction: rtl;
+}
+.topnav {
+  background-color: #001e4d;
+  overflow: hidden;
+  direction: rtl;/*to make the display of navbar from right to left*/
+
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: rgb(0, 0, 0);
+}
+
+#container1, #container2, #container3, #container4, #container5
+{
+    transition: border-color 0.5s;
+    border: 2px solid beige;
+    border-radius: 5px;
+    padding: 10px;
+    opacity: 0.5;
+}
+#container1:target, #container2:target, #container3:target, #container4:target, #container5:target 
+{
+    border: 4px solid #001e4d;
+    background-color: beige;
+    opacity: 1;
+    font-size: larger;
+    font-weight: bolder;
+}
+    </style>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <script src='main.js'></script>
+</head>
+<body>
+    <div class="topnav" id="myTopnav"> 
+        <a href="MainPage.html">الصفحة الرئيسية</a>
+        <a href="الخطوات.html" style="float:right">صفحة الخطوات</a>
+    </div>
+    <br><br>
+    <div id="container1" style="color:red">
+        <h1>اختيار البيانات</h1>
+        <p>هي الخطوة الأولى من أي نظام تصنيف. يختار الباحث بين أحد خيارين: 
+            <br>فإما أن يقوم بجمع البيانات الخاصة به، وهي عمليّة تتطلّب جهداً عظيماً.
+            <br>أو أن يستخدم مجموعة بيانات مجهّزة سابقاً. </p>
+    </div>
+    <br>
+    <br>
+    <div id="container2" style="color:chartreuse">
+        <h1> معالجة البيانات</h1>
+        <p>تغطي هذه العملية مجموعة من الخطوات بهدف المعالجة المسبقة للبيانات تشمل: 
+            <br>التقطيع والتقييس وإزالة الأحرف المتكرّرة وحذف الرموز والروابط والإشارات إلخ...
+            <br>إضافة إلى إعادة الكلمات إلى جذرها أو جذعها. </p>
+    </div>
+    <br>
+    <br>
+    <div id="container3" style="color:blue">
+        <h1>استخراج المميزات</h1>
+            <p>تعدّ مسألة اختيار المميزات أحد أكثر المهام صعوبة في مجال تحليل المشاعر. إذ أن اختيار المميّزات الصحيحة يحدّد الأداء الكلي لعملية التصنيف.
+            <br> وهناك أربعة أنواع من المميزات: 
+            <br>المميّزات الأسلوبية، والمميّزات النحويّة، المميّزات الدلاليّة وميّزات المعجم.</p>
+    </div>    
+    <br>
+    <br>
+    <div id="container4" style="color:goldenrod">
+            <h1>اختيار تقنية التحليل</h1>
+        <p>يختار الباحث بين أحد ثلاثة خيارات: 
+            <br>التعلّم الآلي: الذي يكون إما خاضعاً للإشراف أو غير خاضع للإشراف.
+            <br>القواميس وهي تقنية تعتمد على القواعد.
+            <br>التقنية الهجينة: وهي التي تجمع بين التعلم الآلي وتقنية القواميس. </p>
+    </div>
+    <br>
+    <br>
+    <div id="container5" style="color:fuchsia">
+        <h1>التقييم</h1>
+        <p>تتمثل إحدى الخطوات الرئيسية في قياس مدى جودة النموذج الذي تمّ إنشاؤه أي في التقييم. 
+            <br>والتقييم على نوعين: جوهري وخارجي.<br>فقد  يكون مقياس التقييم هو الضبط والاستدعاء، كما قد يكون الدقة أو التطابق بين التسمية والإخراج أو عدم التطابق. </p>
+    </div>
+    <br>
+    <br>
+    
+    <!--
+        reference: 
+        https://www.youtube.com/watch?v=qEcXe51-ZTw&t=20s
+        https://www.youtube.com/watch?v=MkvHPOT4RS8
+    -->
+</body>
+</html>

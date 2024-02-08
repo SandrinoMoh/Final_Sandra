@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>لعبة المطابقة</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <style>
+    .container {
+        max-width: 960px;
+        margin: auto;
+        direction: rtl;
+    }    
+    body {
+        background-color: #001e4d;
+        font-family: 'Poppins', sans-serif;
+        direction: rtl;
+    }
+    h1, h3, p {
+        text-align: center;
+    }
+    h1 {
+        color: crimson;
+    }
+    h3, p {
+        color: #fff;
+    }
+    main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 5px;
+    }
+    .draggable-list {
+        padding: 5px;
+    }
+    li {
+        list-style: none;
+        padding: 10px;
+        margin: 5px;
+        background-color: #cfd8dc;
+        border: 1px solid #b0bec5;
+        color: #263238;
+        cursor: grab;
+    }
+    .over {
+        background-color: #90a4ae;
+    }
+    table {
+        max-width: 640px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 10px 10px;
+    }
+    td {
+        border: 1px solid #90a4ae;
+    }
+    tr:nth-child(even) {
+        background-color: #cfd8dc;
+    }
+    tr:nth-child(odd) {
+        color: #fff;
+    }
+    button {
+        margin: auto;
+        cursor: pointer;
+        display: block;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: none;
+        background-color: #607d8b;
+        color: #fff;
+    }
+    button:hover {
+        background-color: #516a75;
+    }
+    #endMessage {
+        display: none;
+    }
+    #back-btn {
+            background: #607d8b;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
+            padding: 10px;
+            margin: 20px auto p;
+            border-radius: 10px;
+            cursor: pointer;
+            /*display: none;/*the button will be hidden as long as the question is not answered*/
+            display: block;
+            position: relative;
+            top: 130px;
+        }
+    #back-btn:hover {
+        color: green;
+    }
+    </style>
+    <script src='main.js'></script>
+</head>
+<body>
+    <h1>لعبة مطابقة خطوات تحليل المشاعر</h1>
+    <p>اسحب خطوة مرقّمة وضعها فوق الخطوة المناسبة لترتيبها في سلّم الخطوات المتّبعة في تحليل المشاعر </p>
+    <main class="container">
+        <div>
+            <ul class="draggable-list">
+                <li id="e1" draggable="true">الخطوة الأولى</li>
+                <li id="e2" draggable="true">الخطوة الثانية</li>
+                <li id="e3" draggable="true">الخطوة الثالثة</li>
+                <li id="e4" draggable="true">الخطوة الرابعة</li>
+                <li id="e5" draggable="true">الخطوة الخامسة</li>                
+            </ul>
+        </div>
+        <div>
+            <ul class="draggable-list">
+                <li id="s2" draggable="true">معالجة البيانات</li>
+                <li id="s5" draggable="true">التقييم</li>
+                <li id="s1" draggable="true">اختيار البيانات</li>
+                <li id="s3" draggable="true">استخراج المميزات</li>
+                <li id="s4" draggable="true">اختيار تقنية التحليل</li>
+            </ul>
+        </div>
+    </main>
+    <div id="endMessage">
+        <h3>أحسنت!</h3>
+        <table>
+            <tr>
+                <th>ترتيب الخطوات</th>
+                <th>الخطوات</th>
+            </tr>
+            <tr>
+                <td>الخطوة الأولى</td>
+                <td>اختيار البيانات</td>
+            </tr>
+            <tr>
+                <td>الخطوة الثانية</td>
+                <td>معالجة البيانات</td>
+            </tr>
+            <tr>
+                <td>الخطوة الثالثة</td>
+                <td>استخراج المميزات</td>
+            </tr>
+            <tr>
+                <td>الخطوة الرابعة</td>
+                <td>اختيار تقنية التحليل</td>
+            </tr>
+            <tr>
+                <td>الخطوة الخامسة</td>
+                <td>التقييم</td>
+            </tr>
+        </table>
+        <button onclick="playAgain()">أعِد المحاولة</button>
+    </div>
+    <button id="back-btn" onclick="window.location.href='MainPage.html'">الصفحة الرئيسية</button>
+    <script language="javascript">
+        const draggableListItems = document.querySelectorAll('.draggable-list li');
+        const endMessage = document.getElementById('endMessage');
+        
+        //current phrase being dragged
+        let selectedId;
+
+        //target phrase;
+        let dropTargetId;
+
+        //counter for correct phrases
+        let matchingCounter = 0;
+
+        addEventListeners();
+
+        function dragStart() {
+            selectedId = this.id;
+        }
+        function dragEnter() {
+            this.classList.add('over');
+        }
+        function dragLeave() {
+            this.classList.remove('over');
+        }
+        function dragOver(ev) {
+            ev.preventDefault();
+        }
+        function dragDrop() {
+            dropTargetId = this.id;
+            if (checkForMatch(selectedId, dropTargetId)) {
+                document.getElementById(selectedId).style.display = 'none';
+                document.getElementById(dropTargetId).style.display = 'none';
+                matchingCounter++;
+            }
+            
+            if (matchingCounter === 5) {
+                endMessage.style.display = 'block';
+            }
+            this.classList.remove('over');
+        }
+
+        function checkForMatch(selected, dropTarget) {
+            switch (selected) {
+                case 'e1' :
+                    return dropTarget === 's1' ? true : false;
+                case 'e2' :
+                    return dropTarget === 's2' ? true : false;
+                case 'e3' :
+                    return dropTarget === 's3' ? true : false;
+                case 'e4' :
+                    return dropTarget === 's4' ? true : false;
+                case 'e5' :
+                    return dropTarget === 's5' ? true : false;
+                default: 
+                    return false;
+            }
+        }
+
+        function checkForMatch2(selected, dropTarget) {
+            switch(selected) {
+                case 's1' : 
+                    return dropTarget === 'e1' ? true : false;
+                case 's2' : 
+                    return dropTarget === 'e2' ? true : false;
+                case 's3' :
+                    return dropTarget === 'e3' ? true : false;
+                case 's4' :
+                    return dropTarget === 'e4' ? true : false;
+                case 's5' :
+                    return dropTarget === 'e5' ? true : false;
+                default: 
+                    return false;
+            }
+        }
+
+        function playAgain() {
+            matchingCounter = 0;
+            endMessage.style.display = 'none';
+            draggableListItems.forEach(item => {
+                document.getElementById(item.id).style.display = 'block';
+
+            });
+        }
+
+        function addEventListeners() {
+            draggableListItems.forEach (item => {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragenter', dragEnter);
+                item.addEventListener('drop', dragDrop);
+                item.addEventListener('dragover', dragOver);
+                item.addEventListener('dragleave', dragLeave);
+            });
+        }
+
+    </script>
+    <!-- reference: https://www.youtube.com/watch?v=twq9WHgUhQc&t=60s
+                    https://bitbucket.org/james-schneider/drag-and-drop-api-matching-game/src/main/-->
+</body>
+</html>

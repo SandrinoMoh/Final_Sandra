@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: #001e4d;
+        }
+        .app {
+            background: #fff;
+            width: 90%;
+            max-width: 600px;
+            margin: 100px auto 0;
+            border-radius: 10px;
+            padding: 30px;
+            direction: rtl;
+        }
+        .app h1 {
+            font-size: 30px;
+            color: crimson;
+            font-weight: 600;
+            border-bottom: 1px solid #333;
+            padding-bottom: 30px;
+            text-align: center;
+        }
+        .quiz {
+            padding: 20px 0;
+        }
+        .quiz h2 {
+            font-size: 15px;
+            color: #001e4d;
+            font-weight: 600;
+        }
+        .btn {
+            background: #fff;
+            color: #222;
+            font-size: 18px;
+            font-weight: 500;
+            width: 100%;
+            border: 1px solid #222;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: right;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn:hover:not([disabled]) {
+            background: #222;
+            color: #fff;
+        }
+        .btn:disabled {
+            cursor: no-drop;
+        }
+        #next-btn {
+            background: #001e4d;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
+            padding: 10px;
+            margin: 20px auto 0;
+            border-radius: 4px;
+            cursor: pointer;
+            display: none;/*the button will be hidden as long as the question is not answered*/
+        }
+        .correct {
+            background: #9aeabc;
+        }
+        .incorrect {
+            background: #ff9393;
+        }
+        #back-btn {
+            background: #607d8b;
+            color: #fff;
+            font-weight: 500;
+            width: 150px;
+            border: 0;
+            padding: 10px;
+            margin: 20px auto 0;
+            border-radius: 10px;
+            cursor: pointer;
+            /*display: none;/*the button will be hidden as long as the question is not answered*/
+            display: block;
+        }
+        #back-btn:hover {
+            color: green;
+        }
+
+    </style>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>اختبر معلوماتك</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='main.js'></script>
+    <!--<link rel='stylesheet' type='text/css' media='screen' href='main.css'>-->
+    
+</head>
+<body>
+    <div class= "app">
+        <h1>اخــتــبــر مــعــلــومــاتــك</h1>
+        <div class="quiz">
+            <h2 id="question">اكتبي السؤال هنا</h2>
+            <div id="answer-buttons">
+                <button class="btn">الجواب الأول</button>
+                <button class="btn">الجواب الثاني</button>
+                <button class="btn">الجواب الثالث</button>
+                <button class="btn">الجواب الرابع</button>
+            </div>
+            <button id="next-btn">التالي</button>
+        </div>
+
+    </div>
+    <button id="back-btn" onclick="window.location.href='MainPage.html'">الصفحة الرئيسية</button>
+    <script language="JavaScript">
+        const questions = [
+            {
+                question: " انتقِ الإجابة التي لا تدخل في مستويات تحليل المشاعر:",
+                answers:
+                [
+                    {text: "الكلمة", correct: false},
+                    {text: "الحرف", correct: true},
+                    {text: "المستند", correct: false},
+                    {text: "الجملة", correct: false},
+                ]
+            }, 
+            {
+                question: "ما هي طرق التعلّم الآلي؟",
+                answers:
+                [
+                    {text: "التعلّم المستند إلى القواعد", correct: false},
+                    {text: "المعاجم", correct: false},
+                    {text: "التعلّم بإشراف والتعلّم بدون إشراف", correct: true},
+                    {text: "المدوّنات", correct: false},
+                ]
+            },
+            {
+                question: "أي من المنهجيّات التالية تدخل ضمن منهجيّة معتمدة لبناء المعاجم؟",
+                answers:
+                [
+                    {text: "منهجية التعلّم الآلي", correct: false},
+                    {text: "منهجية التصنيف", correct: false},
+                    {text: "المنهجية العلميّة", correct: false},
+                    {text: "منهجية القاموس القائم على المدوّنات", correct: true},
+                ]
+            },
+            {
+                question: "أي إجابة تدخل ضمن تقنية التعلم الآلي الخاضع للإشراف؟",
+                answers:
+                [
+                    {text: "أشجار القرار والمصنّفات الاحتماليّة", correct: true},
+                    {text: "أشجار القرار والمدوّنات", correct: false},
+                    {text: " أشجار القرار وأشجار السنديان", correct: false},
+                    {text: "لا شيء ممّا ذُكِرَ أعلاه", correct: false},
+                ]
+            }
+        ];
+        const questionElement = document.getElementById("question");
+        const answerButtons = document.getElementById("answer-buttons");
+        const nextButton =document.getElementById("next-btn");
+
+        //create question index and scores
+        let currentQuestionIndex = 0;
+        let score = 0;
+        
+        function startQuiz()
+        {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.innerHTML = "الـتـالـي";
+            showQuestion();
+        }
+        function showQuestion()
+        {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            let questionNo = currentQuestionIndex +1;
+            questionElement.innerHTML = questionNo + "." + currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => 
+            {
+                const button = document.createElement("button");
+                button.innerHTML = answer.text;
+                button.classList.add("btn");
+                answerButtons.appendChild(button);
+                if(answer.correct)
+                {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener("click", selectAnswer);
+            });
+        }
+
+        //remove previous answers    
+        function resetState()
+        {
+            nextButton.style.display= "none";
+            while(answerButtons.firstChild)
+            {
+                answerButtons.removeChild(answerButtons.firstChild)
+            }
+        }
+
+        function selectAnswer(e)
+        {
+            const selectedBtn= e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+            if(isCorrect)
+            {
+                selectedBtn.classList.add("correct");
+                score ++;
+            } else 
+            {
+                selectedBtn.classList.add("incorrect");
+            }
+            Array.from(answerButtons.children).forEach(button => {
+                if(button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                }
+                button.disabled = true;
+            });
+            nextButton.style.display = "block";
+        } 
+
+        function showScore() {
+            resetState();
+            questionElement.innerHTML= "نتيجتك هي: " + score + " من " + questions.length + "!";
+            nextButton.innerHTML= "أعِد المحاولة";
+            nextButton.style.display= "block";
+        }
+
+        function  handleNextButton() {
+            currentQuestionIndex ++;
+            if(currentQuestionIndex < questions.length){
+                showQuestion();
+            } else {
+                showScore();
+            }
+        }
+
+        nextButton.addEventListener("click", ()=>{
+            if(currentQuestionIndex < questions.length){
+                handleNextButton();
+            } else {
+                startQuiz();
+            }
+        });
+        startQuiz();
+        
+    </script>
+        <!--reference for this sheet: https://www.youtube.com/watch?v=PBcqGxrr9g8&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2Fsearch%3Fq%3Dmaking%2Bmultiple%2Bchoice%2Bquestion%2Bquiz%2Busing%2Bhtml%2Bcss%2Band%2Bjavascript%26sca_esv%3D62c6a59d79590dd7%26sxsr&source_ve_path=Mjg2NjY&feature=emb_logo-->
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>تــصــفّــح الــبــحــث</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+* { 
+  margin: 0; 
+  padding: 0; 
+  font-family: 'Poppins', sans-serif; 
+  box-sizing: border-box; 
+  align-items: center; 
+  direction: rtl; }
+.topnav {
+  background-color: #001e4d;
+  overflow: hidden;
+  direction: rtl;/*to make the display of navbar from right to left*/
+}
+.topnav h3 {
+  float: right;
+  color: #f2f2f2;
+  padding: 5px 5px;
+  font-size: 17px;
+}
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: rgb(0, 0, 0);
+}
+#slide-container { 
+  width: 800px; 
+  height: 480px; 
+  margin-left: auto;
+  margin-right: auto;
+  overflow: auto; 
+  border: 3px solid black; 
+  display: block; 
+  justify-content: center; }
+
+#slide-image { 
+  max-width: 100%; 
+  height: auto; }
+
+.button-container { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  margin-top: 5px; }
+
+#next-button, #previous-button { 
+  background: #001e4d; 
+  color: #fff; 
+  font-weight: 500; 
+  width: 150px; 
+  font-size: 20px; 
+  padding: 10px; 
+  margin: 0 20px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  display: block; 
+  position: relative; 
+  top: 20px; }
+
+#next-button:hover, #previous-button:hover { 
+  color: orchid;
+  background: blue; 
+  transform: 
+  scale(1.1); }
+</style>   
+</head>
+<body>
+  <div class="topnav" id="myTopnav"> 
+    <a href="MainPage.html">الصفحة الرئيسية</a>
+    <h3>تــصــفَّــح الــبــحــث</h3>
+  </div>
+  <div id="slide-container">
+      <img id="slide-image" src="slide1.jpg" alt="Slide 1">
+  </div>
+    <div class="button-container">
+      <button id="next-button">التالي</button>
+      <button id="previous-button">السـابـق</button>
+  </div>
+<script language="javascript" defer>
+    const slideContainer = document.getElementById("slide-container");
+    const nextButton = document.getElementById("next-button");
+    const previousButton = document.getElementById("previous-button");
+
+    let slideIndex = 1;
+
+    // Set up the next button click event
+    nextButton.addEventListener("click", () => {
+    slideIndex++;
+    if (slideIndex > 35) {
+        slideIndex = 1;
+    }
+    loadSlide();
+    });
+    // Set up the previous button click event
+  previousButton.addEventListener("click", () => {
+  slideIndex--;
+  if (slideIndex < 1) {
+  slideIndex = 35;
+  }
+  loadSlide();
+  });
+
+    // Load the first slide
+    loadSlide();
+
+    function loadSlide() {
+    // Remove existing slide images
+    slideContainer.innerHTML = "";
+
+    // Create a new slide image
+    const slideImage = document.createElement("img");
+    slideImage.id = "slide-image";
+    slideImage.src = `slide${slideIndex}.jpg`;
+    slideImage.alt = `Slide${slideIndex}`;
+
+    // Add the slide image to the container
+    slideContainer.appendChild(slideImage);
+    }
+        
+</script>
+</body>
+</html>
